@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+for file in "$@"; do
+    if ! mutagen-inspect "$file" | grep covr 1>/dev/null; then
+        echo "$file";
+    fi;
+done
