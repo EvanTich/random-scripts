@@ -1,0 +1,13 @@
+#!/bin/bash
+
+TEMP_PATH="/tmp"
+
+file="$1"
+url="$2"
+
+echo "Downloading thumbnail from $url"
+curl "$(youtube-dl --get-thumbnail -- "$url")" --output "$TEMP_PATH/artwork.tmp"
+convert "$TEMP_PATH/artwork.tmp" -thumbnail '720x720^' -gravity center -extent 720x720 "$TEMP_PATH/artwork.jpg"
+
+echo "Embedding thumbnail in $file"
+atomicparsley "$file" --overWrite --artwork "$TEMP_PATH/artwork.jpg"
