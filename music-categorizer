@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+MUSIC_PATH="$HOME/Music"
+
+categories="absolute bangers\nchill\nslow\nclassics\nweird\nsad\nwhatever else"
+
+for file in "$@"; do
+    if [[ "$file" != *.m4a ]]; then
+        echo "Skipping non m4a file $file"
+        continue
+    fi
+
+    echo "Playing $file"
+    mpv --loop=no --volume=50 --really-quiet "$file"
+    category="$(echo -e "$categories" | dmenu -p "Choose the category")"
+    if [ -z "$category" ]; then
+        echo "Skipping $file..."
+        cont="$(echo -e "Yes\nNo" | dmenu -p "Continue?")"
+        if [ "$cont" != "Yes" ]; then
+            echo "Quiting."
+            break
+        fi
+        continue
+    fi
+
+    mv -i "$file" "$MUSIC_PATH/$category"
+done
