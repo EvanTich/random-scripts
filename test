@@ -1,0 +1,14 @@
+#!/bin/bash
+
+rand() {
+    echo "$thing"
+    false
+}
+
+thing="something"
+rand
+for arg in "$@"; do
+    thing="$arg"
+    rand
+    echo $?
+done
