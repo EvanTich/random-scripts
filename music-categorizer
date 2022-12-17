@@ -1,13 +1,12 @@
 #!/bin/bash
 
-
 MUSIC_PATH="$HOME/Music"
 
-categories="absolute bangers\nchill\nslow\nclassics\nweird\nsad\nwhatever else"
+categories="absolute bangers\ngood enough\nchill\nslow\nclassics\nweird\nsad\nnostalgic\nwhatever else"
 
 for file in "$@"; do
-    if [[ "$file" != *.m4a ]]; then
-        echo "Skipping non m4a file $file"
+    if ! file --mime-type -b "$file" | grep audio >/dev/null 2>&1 ; then
+        echo "Skipping non audio file $file"
         continue
     fi
 
